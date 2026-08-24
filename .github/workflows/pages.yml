@@ -3,6 +3,10 @@ name: Publish Sukarah Pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
+    paths:
+      - 'pages-trigger.txt'
   workflow_dispatch:
 
 permissions:
