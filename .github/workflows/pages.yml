@@ -1,4 +1,4 @@
-name: Deploy Sukarah Preview
+name: Publish Sukarah Pages
 
 on:
   push:
@@ -21,16 +21,28 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Configure Pages
+      - uses: actions/checkout@v4
+      - name: Enable and configure Pages
         uses: actions/configure-pages@v5
         with:
           enablement: true
-      - name: Upload site
+      - name: Build exact Sukarah static page
+        shell: bash
+        run: |
+          mkdir -p _site
+          node - <<'NODE'
+          const fs = require('fs');
+          const zlib = require('zlib');
+          const b64 = fs.readFileSync('final-payload.b64','utf8').trim();
+          const html = zlib.brotliDecompressSync(Buffer.from(b64,'base64'));
+          fs.writeFileSync('_site/index.html', html);
+          console.log('Sukarah page bytes:', html.length);
+          NODE
+          test -s _site/index.html
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
-      - name: Deploy Pages
+          path: _site
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
