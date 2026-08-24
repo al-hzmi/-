@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#f7f0e6" />
+<meta name="description" content="كنافة سكره — تجربة رقمية متكاملة" />
+<title>كنافة سكره</title>
+<style id="app-css"></style>
+</head>
+<body>
+<div id="root"><div style="padding:40px;font-family:Arial,sans-serif">جاري تحميل كنافة سكره…</div></div>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.25.9/babel.min.js"></script>
+<script type="application/javascript"><![CDATA[
+window.__ENV__={VITE_DATA_ADAPTER:'local',VITE_SITE_URL:location.origin};const CACHE={};let EXTERNALS={},MODULES={};function norm(p){let a=[];p.split('/').forEach(x=>{if(!x||x==='.')return;x==='..'?a.pop():a.push(x)});return a.join('/')}function resolveReq(from,req){if(!req.startsWith('.'))return req;let b=from.split('/');b.pop();return norm(b.concat(req.split('/')).join('/'))}function loadModule(id,from='src/App.jsx'){if(EXTERNALS[id])return EXTERNALS[id];let rid=id.startsWith('.')?resolveReq(from,id):id;if(EXTERNALS[rid])return EXTERNALS[rid];if(CACHE[rid])return CACHE[rid].exports;let src=MODULES[rid];if(src==null)throw Error('Module not found: '+rid+' from '+from);let module={exports:{}};CACHE[rid]=module;let req=q=>loadModule(q,rid);let code=Babel.transform(src,{plugins:['transform-modules-commonjs'],presets:[['react',{runtime:'classic'}]],sourceType:'module',filename:rid}).code;new Function('require','module','exports',code)(req,module,module.exports);return module.exports}(async()=>{try{let names=['p0.txt','p1.txt','p2.txt','p3.txt','p4.txt','p5.txt','p6a.txt','p6b.txt','p6c.txt','p7a.txt','p7b.txt'];let B64=(await Promise.all(names.map(n=>fetch(n).then(r=>r.text())))).join('');let bytes=Uint8Array.from(atob(B64),c=>c.charCodeAt(0));let txt=await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).text();let p=JSON.parse(txt);MODULES=p.modules;document.getElementById('app-css').textContent=p.css;let [React,ReactDOMClient,Router,Lucide]=await Promise.all([import('https://esm.sh/react@18.3.1'),import('https://esm.sh/react-dom@18.3.1/client'),import('https://esm.sh/react-router-dom@6.28.0?deps=react@18.3.1,react-dom@18.3.1'),import('https://esm.sh/lucide-react@0.468.0?deps=react@18.3.1')]);EXTERNALS={react:React,'react-dom/client':ReactDOMClient,'react-router-dom':Router,'lucide-react':Lucide};let App=loadModule('src/App.jsx').default;ReactDOMClient.createRoot(document.getElementById('root')).render(React.createElement(App));}catch(e){console.error(e);let root=document.getElementById('root');root.textContent='تعذر تحميل المعاينة: '+String(e.message||e)}})();
+]]></script>
+</body>
+</html>
